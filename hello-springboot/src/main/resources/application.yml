@@ -1,0 +1,27 @@
+# application.yml
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/result/
+      suffix: .jsp
+  application:
+    name: ${APP_NAME:unnamed}
+  datasource:
+    username: root
+    password: wan123
+    url: jdbc:mysql://localhost:3306/db1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      validation-timeout: 3000
+      max-lifetime: 60000
+      maximum-pool-size: 20
+      minimum-idle: 1
+app:
+  db:
+    host: ${DB_HOST:localhost}
+    user: ${DB_USER:root}
+    password: ${DB_PASSWORD:password}
+
