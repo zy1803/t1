@@ -1,41 +1,54 @@
 package com.example.demo.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.entity.Result;
 import com.example.demo.entity.Student;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import com.example.demo.mapper.StudentMapper;
+import com.example.demo.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
+@Slf4j
 @Controller
+@RequestMapping("search")
 public class StudentController {
-    @Resource
-    private JdbcTemplate jdbcTemplate;
 
-    @RequestMapping("/search")
-    public String getAll(Model model) {
-        String sql = "SELECT * FROM student";
-        List<Student> studentList = jdbcTemplate.query(sql, new RowMapper<Student>() {
-            Student student = null;
+    @Autowired
+    private StudentService studentService;
 
-            @Override
-            public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-                student = new Student();
-                student.setId(rs.getInt("id"));
-                student.setName(rs.getString("name"));
-                student.setAge(rs.getInt("age"));
-                return student;
-            }
-        });
-        for (Student student : studentList) {
-            System.out.println(student.getName());
+    /**
+     * 查询所有记录
+     *
+     * @return
+     */
+    @GetMapping("/getAllStudent")
+    public String getAllStudent(Model model) {
+        List<Student> list = studentService.getAllStudent();
+        for (Student student : list) {
+            log.info(student.toString());
         }
-        Model stu = model.addAttribute("students", studentList);
-        return "search";
+        model.addAttribute("AllStudent",list);
+        return "getAllStudent";
     }
+
+    /**
+     * 根据id获取数据
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getStudentById")
+    public Result getStudentById(@RequestBody Student student) {
+        log.info("收到了请求：" + student.getId());
+        Student studentSelect = studentService.getStudentById(student.getId());
+        log.info("查到了对象：" + studentService);
+        return Result.ok(studentService);
+    }
+
 }

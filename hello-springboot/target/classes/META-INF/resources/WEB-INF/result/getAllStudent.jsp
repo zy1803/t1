@@ -36,22 +36,7 @@
         <th>年龄</th>
     </tr></thead>
     <tbody>
-    <tr>
-        <td>1</td>
-        <td>zhang</td>
-        <td>21</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>li</td>
-        <td>21</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>wang</td>
-        <td>21</td>
-    </tr>
-    <c:forEach items="${students}" var="s">
+    <c:forEach items="${AllStudent}" var="s">
         <tr>
             <td> ${s.id}</td>
             <td> ${s.name}</td>

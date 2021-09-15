@@ -11,7 +11,7 @@ spring:
     username: root
     password: wan123
     url: jdbc:mysql://localhost:3306/db1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     hikari:
       auto-commit: false
       connection-timeout: 3000
@@ -24,4 +24,11 @@ app:
     host: ${DB_HOST:localhost}
     user: ${DB_USER:root}
     password: ${DB_PASSWORD:password}
+
+mybatis-plus:
+  mapper-locations: classpath*:xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #    开启驼峰命名规则，也就是数据库的user_id可以对应java的userId，默认是不开启的。
+    map-underscore-to-camel-case: true
 
